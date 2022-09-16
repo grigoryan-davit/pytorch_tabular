@@ -318,7 +318,7 @@ class TabularModel:
             k: v for k, v in self.config.items() if k in trainer_args
         }
         # For some weird reason, checkpoint_callback is not appearing in the Trainer vars
-        trainer_args_config["checkpoint_callback"] = self.config.checkpoint_callback
+        # trainer_args_config["checkpoint_callback"] = self.config.checkpoint_callback
         # turn off progress bar if progress_bar=='none'
         trainer_args_config["enable_progress_bar"] = self.config.progress_bar != "none"
         # Adding trainer_kwargs from config to trainer_args
