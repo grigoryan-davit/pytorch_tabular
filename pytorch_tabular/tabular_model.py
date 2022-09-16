@@ -238,21 +238,21 @@ class TabularModel:
                 mode=self.config.early_stopping_mode,
             )
             callbacks.append(early_stop_callback)
-        if self.config.checkpoints:
-            ckpt_name = f"{self.name}-{self.uid}"
-            ckpt_name = ckpt_name.replace(" ", "_") + "_{epoch}-{valid_loss:.2f}"
-            model_checkpoint = pl.callbacks.ModelCheckpoint(
-                monitor=self.config.checkpoints,
-                dirpath=self.config.checkpoints_path,
-                filename=ckpt_name,
-                save_top_k=self.config.checkpoints_save_top_k,
-                mode=self.config.checkpoints_mode,
-                every_n_epochs=self.config.checkpoints_every_n_epochs,
-            )
-            callbacks.append(model_checkpoint)
-            self.config.checkpoint_callback = True
-        else:
-            self.config.checkpoint_callback = False
+        # if self.config.checkpoints:
+        #     ckpt_name = f"{self.name}-{self.uid}"
+        #     ckpt_name = ckpt_name.replace(" ", "_") + "_{epoch}-{valid_loss:.2f}"
+        #     model_checkpoint = pl.callbacks.ModelCheckpoint(
+        #         monitor=self.config.checkpoints,
+        #         dirpath=self.config.checkpoints_path,
+        #         filename=ckpt_name,
+        #         save_top_k=self.config.checkpoints_save_top_k,
+        #         mode=self.config.checkpoints_mode,
+        #         every_n_epochs=self.config.checkpoints_every_n_epochs,
+        #     )
+        #     callbacks.append(model_checkpoint)
+        #     self.config.checkpoint_callback = True
+        # else:
+        #     self.config.checkpoint_callback = False
         if self.config.progress_bar == "rich":
             callbacks.append(RichProgressBar())
         logger.debug(f"Callbacks used: {callbacks}")
@@ -557,12 +557,12 @@ class TabularModel:
             reset=True,
             trained_backbone=trained_backbone,
             train_sampler=train_sampler,
-            callbacks=callbacks,##
+            callbacks=callbacks,  ##
         )
         lr_finder = self.trainer.tuner.lr_find(
             model=self.model,
             train_dataloaders=train_loader,
-            val_dataloaders=None, ##
+            val_dataloaders=None,  ##
             min_lr=min_lr,
             max_lr=max_lr,
             num_training=num_training,
@@ -792,7 +792,7 @@ class TabularModel:
             cat = torch.zeros(
                 self.config.batch_size,
                 len(self.config.categorical_cols),
-                dtype=torch.int
+                dtype=torch.int,
             )
             cont = torch.randn(
                 self.config.batch_size,
